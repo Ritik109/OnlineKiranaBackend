@@ -16,11 +16,24 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
-Route::get('/alluser', 'UserController@index');
+
+Route::get('/alluser', 'UsersController@index');
 Route::post('/newuser','UsersController@store');
 Route::post('/login','LoginController@validateCred');
 Route::get('/getCategories','CategoryController@fetchAll');
-Route::fallback(function(){
+Route::get('/getTopPics','TopPicsController@index');
+
+Route::namespace('Api')->group(function () {
+    // Controllers Within The "App\Http\Controllers\Admin" Namespace
+    Route::get('/item-search/{search_item}','ItemSearchController@search_item');
+    Route::get('/get-category/{category_name}','CategoryController@get_category');
+    Route::prefix('/address')->group(function () {
+        Route::get('/get-all/{userId}', 'AddressController@index');
+        Route::post('/add/{userId}','AddressController@store');
+        Route::post('/update/{AddressId}','AddressController@update');
+    });
+});
+/*Route::fallback(function(){
     return response()->json([
         'message' => 'Page Not Found. If error persists, contact info@website.com'], 404);
-});
+});*/

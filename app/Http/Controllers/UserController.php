@@ -2,40 +2,94 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use App\User;
-use Response;
+use App\Http\Requests\UserRequest;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
-    public function index()
+    /**
+     * Display a listing of the users
+     *
+     * @param  \App\User  $model
+     * @return \Illuminate\View\View
+     */
+    public function index(User $model)
     {
-        $result=User::all();
-        return Response::json(
-            array(
-                'Success' =>  true ,
-                'data' => $result,
-                'message'   =>  "Data Fetched"
-            ), 405);
+        return view('users.index', ['users' => $model->paginate(15)]);
     }
-    public function insertNewUserDB(Request $request)
+
+    /**
+     * Show the form for creating a new user
+     *
+     * @return \Illuminate\View\View
+     */
+    public function create()
     {
-       
-        $firstname = $request->get('firstname');
-        $middlename = $request->get('middlename');
-        $lastname = $request->get('lastname');
-        $email = $request->get('email');
-        $password=$request->get('password');
-        $phone = $request->get('phone');
-
-        DB::insert('insert into users (user_id, firstname, middlename,lastname,email,password,address_id,phone,created_at)  values (?, ?, ?, ?, ?, ?, ?, ?, ?)', [NULL, $firstname,$middlename,$lastname,$email,$password,NULL,$phone,NULL]);
-       
-       $data=array();
-        return "hello";
-        /*INSERT INTO `users` (`user_id`, `firstname`, `middlename`, `lastname`, `email`, `password`, `address_id`, `phone`, `created_at`) 
-        VALUES (NULL, 'Amit', NULL, 'Badana', NULL, '', NULL, '7070105020', current_timestamp());*/ 
-
+        return view('users.create');
     }
-    
+
+    /**
+     * Store a newly created user in storage
+     *
+     * @param  \App\Http\Requests\UserRequest  $request
+     * @param  \App\User  $model
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function store(UserRequest $request, User $model)
+    {
+        $model->create($request->merge(['password' => Hash::make($request->get('password'))])->all());
+
+        return redirect()->route('user.index')->withStatus(__('User successfully created.'));
+    }
+
+    /**
+     * Show the form for editing the specified user
+     *
+     * @param  \App\User  $user
+     * @return \Illuminate\View\View
+     */
+    public function edit(User $user)
+    {
+        if ($user->id == 1) {
+            return redirect()->route('user.index');
+        }
+
+        return view('users.edit', compact('user'));
+    }
+
+    /**
+     * Update the specified user in storage
+     *
+     * @param  \App\Http\Requests\UserRequest  $request
+     * @param  \App\User  $user
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function update(UserRequest $request, User  $user)
+    {
+        $hasPassword = $request->get('password');
+        $user->update(
+            $request->merge(['password' => Hash::make($request->get('password'))])
+                ->except([$hasPassword ? '' : 'password']
+        ));
+
+        return redirect()->route('user.index')->withStatus(__('User successfully updated.'));
+    }
+
+    /**
+     * Remove the specified user from storage
+     *
+     * @param  \App\User  $user
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function destroy(User  $user)
+    {
+        if ($user->id == 1) {
+            return abort(403);
+        }
+
+        $user->delete();
+
+        return redirect()->route('user.index')->withStatus(__('User successfully deleted.'));
+    }
 }

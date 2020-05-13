@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\User;
+use App\AppUser;
 use Illuminate\Support\Facades\Validator;
 use Response;
 Use Exception;
@@ -22,7 +22,7 @@ class LoginController extends Controller
         if($validationStatus->getData()->Success == true)
         {
             try{
-                $password = User::where('phone', $request->get('phone'))->get(['password']);
+                $password = AppUser::where('phone', $request->get('phone'))->get(['password']);
                 $password = $password[0]->password;
                 if($password == $request->get('password')){
                     return Response::json(

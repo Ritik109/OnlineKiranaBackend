@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Category;
-use Response; 
+use Response; use App\Product;
+
 
 class CategoryController extends Controller
 {
@@ -26,10 +27,17 @@ class CategoryController extends Controller
             $category['cate_icon_url']=url('/')."/category_images/".$category['cate_icon_url'];
 
         }
+        $topProducts=Product::orderByRaw('popularity DESC')->get()->take(10);
+        foreach($topProducts as $topProduct)
+        {
+            $topProduct['image_url']=url('/')."/product_images/".$topProduct['image_url'];
+
+        }
         return Response::json(
             array(
                 'Success' =>  true ,
-                'data' => $categories,
+                'data' => ['categories' =>  $categories ,
+                    'topProducts' => $topProducts],
                 'message'   =>  "Data Fetched"
             ), 405);
     }

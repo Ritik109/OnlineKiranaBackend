@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreUserPost;
-use App\User;
+use App\AppUser;
 use Illuminate\Support\Facades\Validator;
 use Response;
 Use Exception;
@@ -20,7 +20,7 @@ class UsersController extends Controller
     public function index()
     {
         //
-        $result=User::all();
+        $result=AppUser::all();
         return Response::json(
             array(
                 'Success' =>  true ,
@@ -52,7 +52,7 @@ class UsersController extends Controller
         if($validationStatus->getData()->Success == true)
         {
             try{
-                $user =new User([
+                $user =new AppUser([
                     'user_id'=>NULL,
                     'firstname'=>  $request->get('firstname'),
                     'middlename'=> $request->get('middlename'),
@@ -93,9 +93,9 @@ class UsersController extends Controller
             $validator = Validator::make(request()->all(),[
                 'firstname'=> 'required',
                 'lastname'=>'required',
-                'email'=>'required|unique:users,email',
+                'email'=>'required|unique:app_users,email',
                 'password'=>'required',
-                'phone'=>'required|unique:users,phone|regex:/[0-9]{10}/'
+                'phone'=>'required|unique:app_users,phone|regex:/[0-9]{10}/'
             ]);
             if ($validator->fails()){
                 return Response::json(
@@ -120,7 +120,7 @@ class UsersController extends Controller
                     array(
                         'Success' =>  false,
                         'data' => [],
-                        'message'   =>  "SQLSTATE[HY000] [2002] No connection could be made because the target machine actively refused it"
+                        'message'   =>  "SQL Error"
                     ), 405);
             }
                 

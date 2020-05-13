@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "74bbbe4f3614e0d3076e088bd865e488",
+    "content-hash": "00dee027cf5babb0db792a37e548fc69",
     "packages": [
         {
             "name": "dnoegel/php-xdg-base-dir",
@@ -511,6 +511,49 @@
                 "laravel"
             ],
             "time": "2019-11-14T02:24:23+00:00"
+        },
+        {
+            "name": "laravel-frontend-presets/black-dashboard",
+            "version": "v1.0.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/laravel-frontend-presets/black-dashboard.git",
+                "reference": "5b338c237df9cc1b02739d02743ff6c8a9f83ba9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/laravel-frontend-presets/black-dashboard/zipball/5b338c237df9cc1b02739d02743ff6c8a9f83ba9",
+                "reference": "5b338c237df9cc1b02739d02743ff6c8a9f83ba9",
+                "shasum": ""
+            },
+            "require": {
+                "laravel/framework": "^5.5 || ^6.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "LaravelFrontendPresets\\BlackPreset\\BlackPresetServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "LaravelFrontendPresets\\BlackPreset\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Laravel 5.x Front-end preset for black dashboard",
+            "homepage": "https://github.com/creativetimofficial/black-dashboard-laravel",
+            "keywords": [
+                "Black",
+                "laravel",
+                "preset"
+            ],
+            "time": "2019-09-25T09:50:21+00:00"
         },
         {
             "name": "laravel/framework",
