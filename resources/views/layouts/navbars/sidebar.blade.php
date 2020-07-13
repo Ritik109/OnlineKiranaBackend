@@ -14,7 +14,7 @@
             <li>
                 <a data-toggle="collapse" href="#laravel-examples" aria-expanded="true">
                     <i class="fab fa-laravel" ></i>
-                    <span class="nav-link-text" >{{ __('Laravel Examples') }}</span>
+                    <span class="nav-link-text" >{{ __('Management') }}</span>
                     <b class="caret mt-1"></b>
                 </a>
 
@@ -42,6 +42,24 @@
                             <a href="{{ route('manage-category.view') }}">
                                 <i class="tim-icons icon-bullet-list-67"></i>
                                 <p>{{ __('Manage Categories') }}</p>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+
+            <li>
+                <a data-toggle="collapse" href="#" aria-expanded="true">
+                    <i class="icon-delivery-fast" ></i>
+                    <span class="nav-link-text" >{{ __('Orders') }}</span>
+                    <b class="caret mt-1"></b>
+                </a>
+                <div class="collapse show" id="laravel-examples">
+                    <ul class="nav pl-4">
+                        <li @if ($pageSlug ?? '' == 'profile') class="active " @endif>
+                            <a href="{{ route('profile.edit')  }}">
+                                <i class="tim-icons icon-single-02"></i>
+                                <p>{{ __('User Profile') }}</p>
                             </a>
                         </li>
                     </ul>

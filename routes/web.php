@@ -30,6 +30,10 @@ Route::post('manage-product/edit/{prod_id}',['as'=> 'manage-product.update','use
 Route::post('manage-product/editImg',['as'=> 'manage-product.updateImage','uses'=> 'ManageProductsController@updateImage']);
 Route::get('manage-product/delete/{prod_id}',['as'=> 'manage-product.delete','uses'=> 'ManageProductsController@destroy']);
 
+
+Route::prefix('/order')->group(function () {
+	Route::get('/current-orders',['as'=>'order.current','uses'=>'ManageOrders@current_orders']);
+});
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home')->middleware('auth');

@@ -23,8 +23,10 @@ Route::post('/login','LoginController@validateCred');
 Route::get('/getCategories','CategoryController@fetchAll');
 Route::get('/getTopPics','TopPicsController@index');
 
+
 Route::namespace('Api')->group(function () {
     // Controllers Within The "App\Http\Controllers\Admin" Namespace
+    Route::get('/app-home-page/{userId}','AppHomePageController@index');
     Route::get('/item-search/{search_item}','ItemSearchController@search_item');
     Route::get('/get-category/{category_name}','CategoryController@get_category');
     Route::prefix('/address')->group(function () {
@@ -32,8 +34,13 @@ Route::namespace('Api')->group(function () {
         Route::post('/add/{userId}','AddressController@store');
         Route::post('/update/{AddressId}','AddressController@update');
     });
+    Route::prefix('/cart')->group(function () {
+        Route::get('/add-to-cart/{userId}/{productId}/{event}', 'CartController@add_to_cart');
+        Route::get('/cart-items/{userId}','CartController@cart_items');
+        Route::get('/checkout/{userId}/{addressId?}','CartController@checkout');
+    });
 });
-/*Route::fallback(function(){
+Route::fallback(function(){
     return response()->json([
         'message' => 'Page Not Found. If error persists, contact info@website.com'], 404);
-});*/
+});

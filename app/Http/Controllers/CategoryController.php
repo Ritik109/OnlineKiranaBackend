@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Category;
-use Response; use App\Product;
+use Response; 
+use App\Product;
 
 
 class CategoryController extends Controller
@@ -39,7 +40,7 @@ class CategoryController extends Controller
                 'data' => ['categories' =>  $categories ,
                     'topProducts' => $topProducts],
                 'message'   =>  "Data Fetched"
-            ), 405);
+            ), 200);
     }
 
     /**
